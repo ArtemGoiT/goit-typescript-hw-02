@@ -10,8 +10,8 @@ import App from "./App.jsx";
 // Set the root app element for accessibility
 ReactModal.setAppElement("#root");
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <App />
+        <App /> {" "}
   </React.StrictMode>
 );
