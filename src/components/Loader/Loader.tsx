@@ -17,4 +17,8 @@ const Loader = () => {
     </div>
   );
 };
+
+Loader.propTypes = {
+  // No props are currently passed to Loader
+};
 export default Loader;

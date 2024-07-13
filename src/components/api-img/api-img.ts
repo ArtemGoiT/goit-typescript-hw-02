@@ -1,22 +1,20 @@
 import axios from "axios";
+import { Image } from "../../../App.types";
 
-interface Image {
-  id: string;
-  url: string;
-  title: string;
-  // Добавьте другие релевантные поля в зависимости от структуры данных вашего изображения
+// Интерфейс для структуры изображения
+
+// Интерфейс для ответа от функции fetchImages
+export interface FetchImagesResponse {
+  results: Image[]; // массив изображений
+  total: number; // общее количество изображений
 }
 
-interface FetchImagesResponse {
-  results: Image[];
-  total: number;
-}
-
+// Функция fetchImages принимает searchQuery и page в качестве параметров и возвращает Promise с типом FetchImagesResponse
 async function fetchImages(
   searchQuery: string,
   page: number
 ): Promise<FetchImagesResponse> {
-  const API_KEY: string = import.meta.env.VITE_REACT_APP_API_KEY as string;
+  const API_KEY: string = "mskXwYk7bCouuxf64aJE3hOqbVNI95fUDMc0-66QkWM"; // Ваш API ключ
   const baseUrl = "https://api.unsplash.com/search/photos/";
 
   const params = new URLSearchParams({

@@ -7,13 +7,7 @@ import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "./components/ImageModal/ImageModal";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import toast, { Toaster } from "react-hot-toast";
-
-interface Image {
-  id: string;
-  url: string;
-  title: string;
-  // Добавьте другие релевантные поля в зависимости от структуры данных вашего изображения
-}
+import { Image } from "../App.types";
 
 interface FetchImagesResponse {
   results: Image[];
