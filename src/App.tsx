@@ -3,28 +3,41 @@ import fetchImages from "./components/api-img/api-img";
 import SearchBar from "./components/SearchBar/SearchBar";
 import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 import Loader from "./components/Loader/Loader";
-
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "./components/ImageModal/ImageModal";
-
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import toast, { Toaster } from "react-hot-toast";
 
+interface Image {
+  id: string;
+  url: string;
+  title: string;
+  // Добавьте другие релевантные поля в зависимости от структуры данных вашего изображения
+}
+
+interface FetchImagesResponse {
+  results: Image[];
+  total: number;
+}
+
 const App = () => {
-  const [query, setQuery] = useState("");
-  const [page, setPage] = useState(1);
-  const [loadState, setLoadState] = useState(false);
-  const [error, setError] = useState("");
-  const [images, setImages] = useState([]);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [totalImages, setTotalImages] = useState(0);
+  const [query, setQuery] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
+  const [loadState, setLoadState] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  const [images, setImages] = useState<Image[]>([]);
+  const [selectedImage, setSelectedImage] = useState<Image | null>(null);
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [totalImages, setTotalImages] = useState<number>(0);
 
   useEffect(() => {
-    const fetcData = async () => {
+    const fetchData = async () => {
       setLoadState(true);
       try {
-        const { results, total } = await fetchImages(query, page);
+        const { results, total }: FetchImagesResponse = await fetchImages(
+          query,
+          page
+        );
         if (page === 1) {
           setImages(results);
           setTotalImages(total);
@@ -41,22 +54,23 @@ const App = () => {
       }
     };
     if (query !== "") {
-      fetcData();
+      fetchData();
     }
   }, [query, page]);
+
   useEffect(() => {
     if (images.length === totalImages && totalImages !== 0) {
-      toast.error("No images to load(");
+      toast.error("No more images to load");
     }
   }, [images, totalImages]);
 
-  const handleSubmit = (searchQuery) => {
+  const handleSubmit = (searchQuery: string) => {
     setQuery(searchQuery);
     setPage(1);
   };
 
   const loadMoreImages = () => {
-    setPage(page + 1);
+    setPage((prevPage) => prevPage + 1);
   };
 
   const closeModal = () => {
@@ -64,7 +78,7 @@ const App = () => {
     setSelectedImage(null);
   };
 
-  const openModal = (image) => {
+  const openModal = (image: Image) => {
     setModalIsOpen(true);
     setSelectedImage(image);
   };

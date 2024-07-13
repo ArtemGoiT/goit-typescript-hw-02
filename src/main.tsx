@@ -5,7 +5,7 @@ import ReactModal from "react-modal";
 import "modern-normalize";
 import "./components/css/index.css";
 
-import App from "./App.jsx";
+import App from "./App.js";
 
 // Set the root app element for accessibility
 ReactModal.setAppElement("#root");
